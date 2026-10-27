@@ -3,46 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A simple form hosting proof of concept.">
-  <title>Form POC</title>
+  <meta name="description" content="Antares form proof of concept.">
+  <link rel="icon" href="https://salesrhythmantares.z8.web.core.windows.net/antares_logo.webp" type="image/webp">
+  <title>Form POC | Antares</title>
   <style>
     :root {
       color-scheme: light;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #172033;
-      background: #f4f6fa;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #17191d;
+      background: #fff;
       font-synthesis: none;
       text-rendering: optimizeLegibility;
+      --line: #e2e6ea;
+      --soft: #f0f3f6;
+      --ink: #17191d;
+      --muted: #626a73;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 40px 20px; }
-    main { width: min(100%, 620px); }
-    .eyebrow { margin: 0 0 10px; color: #53627a; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
-    h1 { margin: 0; font-size: clamp(2rem, 6vw, 2.7rem); letter-spacing: -.045em; }
-    .intro { margin: 12px 0 26px; color: #58657a; line-height: 1.6; }
-    .card { padding: clamp(22px, 5vw, 36px); background: #fff; border: 1px solid #e2e7ef; border-radius: 18px; box-shadow: 0 18px 55px #25385812; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    label { display: block; margin: 0 0 7px; color: #29364b; font-size: .9rem; font-weight: 650; }
+    body { margin: 0; min-height: 100vh; background: #fff; }
+    .topbar { border-bottom: 1px solid var(--line); }
+    .topbar-inner { display: flex; align-items: center; gap: 12px; max-width: 1280px; min-height: 72px; margin: 0 auto; padding: 14px 20px; }
+    .brand-mark { display: block; width: 28px; height: 34px; object-fit: contain; }
+    .brand-title { margin: 0; font-size: 20px; line-height: 1.2; font-weight: 700; letter-spacing: -.025em; }
+    .brand-subtitle { margin: 3px 0 0; color: var(--muted); font-size: 13px; }
+    main { width: min(100% - 40px, 1280px); margin: 26px auto 48px; }
+    .form-panel { width: min(100%, 760px); padding: 24px; border: 1px solid var(--line); border-radius: 15px; background: #fff; }
+    h2 { margin: 0; font-size: 19px; line-height: 1.35; font-weight: 700; letter-spacing: -.015em; }
+    .description { margin: 6px 0 22px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
     .field { margin-bottom: 18px; }
-    input, select, textarea { width: 100%; border: 1px solid #cbd4e1; border-radius: 9px; padding: 12px 13px; color: #172033; background: #fff; font: inherit; }
-    input:focus, select:focus, textarea:focus { outline: 3px solid #d8e5ff; border-color: #4975cf; }
-    textarea { min-height: 132px; resize: vertical; }
-    button { border: 0; border-radius: 9px; padding: 13px 19px; color: white; background: #2457b2; font: inherit; font-weight: 700; cursor: pointer; }
-    button:hover { background: #194793; }
-    .note { margin: 18px 0 0; color: #6b778b; font-size: .82rem; line-height: 1.5; }
-    #status { margin: 16px 0 0; color: #17623a; font-weight: 650; }
+    label { display: block; margin: 0 0 7px; color: var(--ink); font-size: 13px; font-weight: 650; }
+    input, select, textarea { display: block; width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid #c9cfd6; border-radius: 8px; color: var(--ink); background: #fff; font: inherit; font-size: 14px; }
+    textarea { min-height: 124px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: 3px solid rgb(23 25 29 / 12%); border-color: var(--ink); }
+    button { min-height: 40px; padding: 9px 17px; border: 1px solid var(--ink); border-radius: 8px; color: #fff; background: var(--ink); font: inherit; font-size: 14px; font-weight: 650; cursor: pointer; }
+    button:hover { background: #30343a; }
+    button:focus-visible { outline: 3px solid rgb(23 25 29 / 24%); outline-offset: 2px; }
+    .note { margin: 16px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    #status { margin: 14px 0 0; color: #286244; font-size: 14px; font-weight: 600; }
     #status:empty { display: none; }
-    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; gap: 0; } body { padding: 26px 16px; } }
+    @media (max-width: 600px) {
+      .topbar-inner { min-height: 64px; padding: 12px 16px; }
+      main { width: min(100% - 32px, 1280px); margin-top: 20px; }
+      .form-panel { padding: 18px; }
+      .fields { grid-template-columns: 1fr; gap: 0; }
+    }
   </style>
 </head>
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <img class="brand-mark" src="https://salesrhythmantares.z8.web.core.windows.net/antares_logo.webp" alt="Antares">
+      <div>
+        <p class="brand-title">Form POC</p>
+        <p class="brand-subtitle">Antares Solutions</p>
+      </div>
+    </div>
+  </header>
   <main>
-    <p class="eyebrow">Proof of concept</p>
-    <h1>Get in touch</h1>
-    <p class="intro">A sample form page hosted as a static site on GitHub Pages. Replace these fields with the final form when it’s ready.</p>
-    <section class="card" aria-label="Contact form">
+    <section class="form-panel" aria-labelledby="form-title">
+      <h2 id="form-title">Contact form</h2>
+      <p class="description">Sample layout for the upcoming form.</p>
       <form id="contact-form">
-        <div class="grid">
+        <div class="fields">
           <div class="field">
             <label for="name">Name</label>
             <input id="name" name="name" autocomplete="name" required>
@@ -55,7 +78,7 @@
         <div class="field">
           <label for="topic">Topic</label>
           <select id="topic" name="topic" required>
-            <option value="">Choose a topic</option>
+            <option value="">Select a topic</option>
             <option>General enquiry</option>
             <option>Request a demo</option>
             <option>Other</option>
@@ -65,16 +88,16 @@
           <label for="message">Message</label>
           <textarea id="message" name="message" required></textarea>
         </div>
-        <button type="submit">Send message</button>
+        <button type="submit">Submit</button>
         <p id="status" role="status" aria-live="polite"></p>
-        <p class="note">POC only: this demo shows a confirmation in your browser. It does not send or save form responses.</p>
+        <p class="note">Demo only. Responses are not stored.</p>
       </form>
     </section>
   </main>
   <script>
     document.getElementById("contact-form").addEventListener("submit", (event) => {
       event.preventDefault();
-      document.getElementById("status").textContent = "Thanks — the demo form is working.";
+      document.getElementById("status").textContent = "Demo submitted.";
       event.currentTarget.reset();
     });
   </script>
